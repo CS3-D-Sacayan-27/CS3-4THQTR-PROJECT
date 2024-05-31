@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-image: url('https://todayspractitioner.com/wp-content/uploads/2023/08/genomics-dna.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            position: relative;
+            color: #FF0000;
+        }
+        header {
+            position: relative;
+            text-align: center;
+            padding: 50px;
+            z-index: 3;
+        }
+        nav {
+            background: rgba(0, 0, 5, 0.8);
+            width: 100%;
+            position: fixed;
+            top: 0px; 
+            z-index: 999;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1em 0;
+            display: block;
+        }
+        .container {
+            background-color: rgba(0, 0, 5, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 100px auto;
+            color: #fff;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #4cae4c;
+        }
+        .toggle-link {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            cursor: pointer;
+            color: #007bff;
+        }
+        .message {
+            margin-top: 15px;
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container" id="container">
+        <div id="signupForm">
+            <h2>Sign Up</h2>
+            <div class="form-group">
+                <label for="signup-username">Username:</label>
+                <input type="text" id="signup-username" required>
+            </div>
+            <div class="form-group">
+                <label for="signup-email">Email:</label>
+                <input type="email" id="signup-email" required>
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password:</label>
+                <input type="password" id="signup-password" required>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="signUp()">Sign Up</button>
+            </div>
+            <span class="toggle-link" onclick="toggleForms()">Login here</span>
+            <div class="message" id="signup-message"></div>
+        </div>
+
+        <div id="loginForm" style="display:none;">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" required>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="logIn()">Login</button>
+            </div>
+            <span class="toggle-link" onclick="toggleForms()">Sign up here</span>
+            <div class="message" id="login-message"></div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForms() {
+            const signupForm = document.getElementById('signupForm');
+            const loginForm = document.getElementById('loginForm');
+            if (signupForm.style.display === 'none') {
+                signupForm.style.display = 'block';
+                loginForm.style.display = 'none';
+            } else {
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            }
+        }
+
+        function signUp() {
+            const username = document.getElementById('signup-username').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const signupMessage = document.getElementById('signup-message');
+
+            if (username && email && password) {
+                localStorage.setItem('username', username);
+                localStorage.setItem('email', email);
+                localStorage.setItem('password', password);
+                signupMessage.textContent = 'Sign Up Successful';
+                signupMessage.classList.remove('message');
+                signupMessage.classList.add('success');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500); 
+            } else {
+                signupMessage.textContent = 'Account not made. Please fill in all fields.';
+                signupMessage.classList.remove('success');
+                signupMessage.classList.add('message');
+            }
+        }
+
+        function logIn() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const loginMessage = document.getElementById('login-message');
+
+            const storedUsername = localStorage.getItem('username');
+            const storedPassword = localStorage.getItem('password');
+
+            if (username === storedUsername && password === storedPassword) {
+                loginMessage.textContent = 'Login Successful';
+                loginMessage.classList.remove('message');
+                loginMessage.classList.add('success');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500); 
+            } else {
+                loginMessage.textContent = 'Login failed. Please check your username and password.';
+                loginMessage.classList.remove('success');
+                loginMessage.classList.add('message');
+            }
+        }
+    </script>
+</body>
+</html>
